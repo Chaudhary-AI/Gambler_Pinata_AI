@@ -1,0 +1,32 @@
+{
+    "assets": [
+      {
+        "poster": "game_poster_start.png",
+        "start_button": "game_start_button.png",
+        "symbols": {
+          "scatter": "scatter_template.png",
+          "x2_multiplier": "multiplier_x2_template.png",
+          "x100_multiplier": "multiplier_x100_template.png",
+          "girl": "symbol_girl.png",
+          "skull": "symbol_skull.png",
+          "shawarma": "symbol_shawarma_taco.png",
+          "sombrero": "symbol_sombrero.png",
+          "maracas": "maracas_pair.png",
+          "chili": "symbol_chili_pepper.png",
+          "A": "symbol_A_letter.png",
+          "K": "symbol_K_letter.png",
+          "Q": "symbol_Q_letter.png",
+          "J": "symbol_J_letter.png"
+        },
+        "buttons": {
+          "increase": "symbol_increase_bet.png",
+          "decrease": "symbol_decrease_bet.png",
+          "wallet": "symbol_wallet_balance.png"
+        },
+        "extras": {
+          "winning_lines": "symbol_winning_bet_lines.png"
+        }
+      }
+    ]
+  }
+  
