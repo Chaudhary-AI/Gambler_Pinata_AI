@@ -1,0 +1,9 @@
+opencv-python
+numpy
+pyautogui
+pillow
+opencv-python-headless
+pytesseract
+chroma_brain
+selenium
+webdriver-manager

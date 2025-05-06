@@ -1,0 +1,10 @@
+import os
+import logging
+
+# Ensure the logs folder exists
+LOG_FOLDER = "logs"
+os.makedirs(LOG_FOLDER, exist_ok=True)
+
+# Logging setup
+LOG_FILE = os.path.join(LOG_FOLDER, "alerts.log")
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(message)s")

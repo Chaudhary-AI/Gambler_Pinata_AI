@@ -1,0 +1,14 @@
+2025-05-06 13:51:10,108 - Starting test: test_get_param_existing_key
+2025-05-06 13:51:10,122 - Finished test: test_get_param_existing_key
+2025-05-06 13:51:10,123 - Starting test: test_get_param_non_existing_key
+2025-05-06 13:51:10,125 - Test PASSED: test_get_param_non_existing_key
+2025-05-06 13:51:10,126 - Finished test: test_get_param_non_existing_key
+2025-05-06 13:51:10,126 - Starting test: test_load_custom_config_empty_file
+2025-05-06 13:51:10,128 - Test PASSED: test_load_custom_config_empty_file
+2025-05-06 13:51:10,128 - Finished test: test_load_custom_config_empty_file
+2025-05-06 13:51:10,128 - Starting test: test_load_custom_config_file_not_found
+2025-05-06 13:51:10,129 - Finished test: test_load_custom_config_file_not_found
+2025-05-06 13:51:10,129 - Starting test: test_load_custom_config_invalid_json
+2025-05-06 13:51:10,132 - Finished test: test_load_custom_config_invalid_json
+2025-05-06 13:51:10,132 - Starting test: test_load_custom_config_valid_file
+2025-05-06 13:51:10,144 - Finished test: test_load_custom_config_valid_file
