@@ -1,0 +1,6 @@
+﻿scatter
+wild
+x20
+x50
+x100
+bonus
