@@ -1,15 +1,7 @@
 ﻿[
-<<<<<<< HEAD
   { "id": 1, "timestamp": "2025-05-06T10:00:00Z", "type": "scatter", "output_snippet": "Scatter! Multiplier x50 triggered!", "confidence": "high" },
   { "id": 2, "timestamp": "2025-05-06T10:01:00Z", "type": "loss", "output_snippet": "Loss round.", "confidence": "medium" },
   { "id": 3, "timestamp": "2025-05-06T10:02:00Z", "type": "multiplier", "output_snippet": "Multiplier x20 appeared.", "confidence": "low" },
   { "id": 4, "timestamp": "2025-05-06T10:03:00Z", "type": "loss", "output_snippet": "Another loss occurred.", "confidence": "medium" },
   { "id": 5, "timestamp": "2025-05-06T10:04:00Z", "type": "win", "output_snippet": "Big Win! x100 Multiplier activated.", "confidence": "high" }
-=======
-  { "output_snippet": "Scatter! Multiplier x50 triggered!" },
-  { "output_snippet": "Loss round." },
-  { "output_snippet": "Multiplier x20 appeared." },
-  { "output_snippet": "Another loss occurred." },
-  { "output_snippet": "Big Win! x100 Multiplier activated." }
->>>>>>> 802adbef86ca9fdfa61eebccf6e44e21a91c986d
 ]
