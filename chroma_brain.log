@@ -1,2 +1,70 @@
 2025-05-06 12:26:18,882 - Processed file: symbol_tracker.py with label: test_run
 2025-05-06 12:26:18,892 - Saved memory block: {'filename': 'symbol_tracker.py', 'label': 'test_run', 'content': '# scripts/symbol_tracker.py\n\nimport time\nimport cv2\nimport numpy as np\nfrom PIL import ImageGrab\n\nSCATTER_TEMPLATE = "assets/scatter_template"\nSCATTER_THRESHOLD = 0.85\n\ndef capture_screen(region=None):\n    screen = ImageGrab.grab(bbox=region)\n    screen_np = np.array(screen)\n    return cv2.cvtColor(screen_np, cv2.COLOR_RGB2BGR)\n\ndef load_template(path):\n    template = cv2.imread(path, cv2.IMREAD_UNCHANGED)\n    if template is None:\n        raise FileNotFoundError(f"❌ Template not found: {path}")\n    return template\n\ndef detect_scatter_symbols():\n    screen = capture_screen()\n    template = load_template(SCATTER_TEMPLATE)\n\n    result = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)\n    locations = np.where(result >= SCATTER_THRESHOLD)\n    count = len(zip(*locations[::-1]))  # List of match points\n\n    return count\n\ndef check_for_scatters():\n    try:\n        count = detect_scatter_symbols()\n        print(f"✨ Scatter Symbols Found: {count}")\n        return count >= 4\n    except FileNotFoundError as e:\n        print(e)\n        return False'}
+2025-05-07 20:53:04,602 - File not found: path/to/file.py
+2025-05-07 21:02:59,921 - File not found: `C:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\chroma_brain.py
+2025-05-07 21:06:10,554 - ❌ File not found: c:\Users\Yenkh\example.py
+2025-05-07 21:06:45,647 - ❌ File not found: c:\Users\Yenkh\example.py
+2025-05-07 21:08:54,902 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\ai_gambler.py with label: project_files
+2025-05-07 21:08:54,906 - Saved memory block: ai_gambler.py
+2025-05-07 21:08:54,907 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\ai_gambler_customized.py with label: project_files
+2025-05-07 21:08:54,909 - Saved memory block: ai_gambler_customized.py
+2025-05-07 21:08:54,910 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\alert_engine.py with label: project_files
+2025-05-07 21:08:54,911 - Saved memory block: alert_engine.py
+2025-05-07 21:08:54,912 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\auto_ingest.py with label: project_files
+2025-05-07 21:08:54,915 - Saved memory block: auto_ingest.py
+2025-05-07 21:08:54,916 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\auto_sentinel.py with label: project_files
+2025-05-07 21:08:54,917 - Saved memory block: auto_sentinel.py
+2025-05-07 21:08:54,918 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\bet_adjuster.py with label: project_files
+2025-05-07 21:08:54,918 - Saved memory block: bet_adjuster.py
+2025-05-07 21:08:54,919 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\bet_optimizer.py with label: project_files
+2025-05-07 21:08:54,920 - Saved memory block: bet_optimizer.py
+2025-05-07 21:08:54,921 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\brain_backup.py with label: project_files
+2025-05-07 21:08:54,922 - Saved memory block: brain_backup.py
+2025-05-07 21:08:54,924 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\chroma_brain.py with label: project_files
+2025-05-07 21:08:54,925 - Saved memory block: chroma_brain.py
+2025-05-07 21:08:54,925 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\cortex_batch.py with label: project_files
+2025-05-07 21:08:54,927 - Saved memory block: cortex_batch.py
+2025-05-07 21:08:54,927 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\cortex_brain_llm.py with label: project_files
+2025-05-07 21:08:54,929 - Saved memory block: cortex_brain_llm.py
+2025-05-07 21:08:54,933 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\cortex_ui.py with label: project_files
+2025-05-07 21:08:54,934 - Saved memory block: cortex_ui.py
+2025-05-07 21:08:54,934 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\free_spin_tracker.py with label: project_files
+2025-05-07 21:08:54,935 - Saved memory block: free_spin_tracker.py
+2025-05-07 21:08:54,936 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\game_launcher.py with label: project_files
+2025-05-07 21:08:54,937 - Saved memory block: game_launcher.py
+2025-05-07 21:08:54,938 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\glow_detector.py with label: project_files
+2025-05-07 21:08:54,939 - Saved memory block: glow_detector.py
+2025-05-07 21:08:54,940 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\hot_mode.py with label: project_files
+2025-05-07 21:08:54,941 - Saved memory block: hot_mode.py
+2025-05-07 21:08:54,942 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\identity_module.py with label: project_files
+2025-05-07 21:08:54,942 - Saved memory block: identity_module.py
+2025-05-07 21:08:54,943 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\log_summary.py with label: project_files
+2025-05-07 21:08:54,944 - Saved memory block: log_summary.py
+2025-05-07 21:08:54,945 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\pixel_click_ai.py with label: project_files
+2025-05-07 21:08:54,948 - Saved memory block: pixel_click_ai.py
+2025-05-07 21:08:54,950 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\shared_brain.py with label: project_files
+2025-05-07 21:08:54,950 - Saved memory block: shared_brain.py
+2025-05-07 21:08:54,951 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\spin_controller.py with label: project_files
+2025-05-07 21:08:54,952 - Saved memory block: spin_controller.py
+2025-05-07 21:08:54,953 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\symbol_tracker.py with label: project_files
+2025-05-07 21:08:54,954 - Saved memory block: symbol_tracker.py
+2025-05-07 21:08:54,955 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\symbol_value_ai.py with label: project_files
+2025-05-07 21:08:54,956 - Saved memory block: symbol_value_ai.py
+2025-05-07 21:08:54,957 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\test_ai_gambler.py with label: project_files
+2025-05-07 21:08:54,958 - Saved memory block: test_ai_gambler.py
+2025-05-07 21:08:54,959 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\tool_usage_chart.py with label: project_files
+2025-05-07 21:08:54,959 - Saved memory block: tool_usage_chart.py
+2025-05-07 21:08:54,960 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\trainer_engine.py with label: project_files
+2025-05-07 21:08:54,961 - Saved memory block: trainer_engine.py
+2025-05-07 21:08:54,962 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\vision_detector.py with label: project_files
+2025-05-07 21:08:54,964 - Saved memory block: vision_detector.py
+2025-05-07 21:08:54,968 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\batch_log.txt with label: project_files
+2025-05-07 21:08:54,968 - Saved memory block: batch_log.txt
+2025-05-07 21:08:54,973 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\folder_structure.txt with label: project_files
+2025-05-07 21:08:55,017 - Saved memory block: folder_structure.txt
+2025-05-07 21:08:55,023 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\project_structure.txt with label: project_files
+2025-05-07 21:08:55,078 - Saved memory block: project_structure.txt
+2025-05-07 21:08:55,085 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\requirements.txt with label: project_files
+2025-05-07 21:08:55,087 - Saved memory block: requirements.txt
+2025-05-07 21:08:55,088 - Processed file: c:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\symbols_watchlist.txt with label: project_files
+2025-05-07 21:08:55,088 - Saved memory block: symbols_watchlist.txt

@@ -20,24 +20,23 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 # Config paths and defaults
 TACTIC_PATH = Path("ruleset") / "tactic.json"
-SCATTER_TEMPLATE_PATH = "scripts/scatter_template"
+SCATTER_TEMPLATE_PATH = "assets/scatter_template"  # Correct path to scatter templates
 DEFAULT_THRESHOLD = 3
-DEFAULT_URL = "https://example.com/game"
 REGION = (500, 300, 1200, 700)  # Default game screen region
 STOP_KEY = "space"  # Key to stop spin
 LOG_FILE = "experience_log.json"
 
 # Load tactic.json
 try:
-    with open(TACTIC_PATH, "r") as f:
+    with open("tactic.json", "r", encoding="utf-8-sig") as f:  # Use utf-8-sig to handle BOM
         tactic = json.load(f)
         print(f"Loaded tactic.json: {tactic}")
         scatter_threshold = tactic.get("scatter_stop_threshold", DEFAULT_THRESHOLD)
-        game_url = tactic.get("url", DEFAULT_URL)
+        game_url = tactic.get("url", "https://m.x1skf.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=th&or=12efmfuo%3Dj1ewr%3Doay&__hv=2fMEQCIEV9J4xK49iMCBPiT0a7pa6Ei5uIKurdFmghBycqBeD3AiAfMvKvFil8l8bmD0uYVF7wXLUDnNnurOSs7lXxeYXqxA%3D%3D")  # Default fallback URL
 except Exception as e:
     print(f"⚠️ Error loading tactic.json: {e}")
     scatter_threshold = DEFAULT_THRESHOLD
-    game_url = DEFAULT_URL
+    game_url = "https://m.x1skf.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=th&or=12efmfuo%3Dj1ewr%3Doay&__hv=2fMEQCIEV9J4xK49iMCBPiT0a7pa6Ei5uIKurdFmghBycqBeD3AiAfMvKvFil8l8bmD0uYVF7wXLUDnNnurOSs7lXxeYXqxA%3D%3D"  # Default fallback URL
 
 # User input for scatter threshold
 user_threshold = input(f"Enter scatter threshold (default: {scatter_threshold}): ")

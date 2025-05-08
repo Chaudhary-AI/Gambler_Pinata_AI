@@ -21,24 +21,14 @@
         "buttons": {
           "increase": "symbol_increase_bet",
           "decrease": "symbol_decrease_bet",
-<<<<<<< HEAD
           "wallet": "symbol_wallet_balance",
           "spin": "symbol_spin_button",
           "auto_spin": "symbol_auto_spin_button"
-=======
-          "wallet": "symbol_wallet_balance"
->>>>>>> 802adbef86ca9fdfa61eebccf6e44e21a91c986d
         },
         "extras": {
           "winning_lines": "symbol_winning_bet_lines"
         }
       }
-<<<<<<< HEAD
     ],
     "description": "This file maps game assets to their identifiers for automation."
 }
-=======
-    ]
-  }
-  
->>>>>>> 802adbef86ca9fdfa61eebccf6e44e21a91c986d

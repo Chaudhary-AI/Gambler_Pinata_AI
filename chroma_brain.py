@@ -1,87 +1,82 @@
-# scripts/chroma_brain.py
-
-# 🧠 Chroma Brain – Source Code Intelligence Module
-# Auto-loads code file content, applies labels, and feeds to LLM/memory
-# Includes graceful fallback if called standalone
+# 🧠 Chroma Brain – Game Automation Module
 
 import os
-import sys
 import logging
+import json
+import webbrowser
 from pathlib import Path
+import pyautogui
+import time
 
 # Logging setup
 LOG_FILE = "chroma_brain.log"
-logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(message)s")
-
-# Add the current directory to sys.path dynamically
-sys.path.append(str(Path(__file__).resolve().parent))
+try:
+    logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format="%(asctime)s - %(message)s")
+except Exception as e:
+    print(f"⚠️ Logging setup failed: {e}")
 
 def log_action(message):
+    """Logs actions and errors."""
     logging.info(message)
 
-def feed_code_file(file_path, label=None):
+def load_game_url():
     """
-    Loads a .py or .txt file and returns a structured memory block.
+    Loads the game URL from tactic.json.
     """
-    if not os.path.isfile(file_path):
-        print(f"❌ File not found: {file_path}")
-        log_action(f"File not found: {file_path}")
+    try:
+        with open("tactic.json", "r") as f:
+            config = json.load(f)
+            return config.get("url")
+    except Exception as e:
+        log_action(f"⚠️ Failed to load URL from tactic.json: {e}")
+        print(f"⚠️ Failed to load URL from tactic.json: {e}")
         return None
 
-    if not file_path.endswith(('.py', '.txt')):
-        print(f"❌ Unsupported file type: {file_path}")
-        log_action(f"Unsupported file type: {file_path}")
-        return None
+def launch_game(url):
+    """
+    Launches the game in the default web browser.
+    """
+    if not url:
+        print("❌ No URL provided. Cannot launch the game.")
+        return
 
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            code = f.read()
-
-        memory_block = {
-            "filename": os.path.basename(file_path),
-            "label": label or "unlabeled_code",
-            "content": code.strip()
-        }
-        log_action(f"Processed file: {file_path} with label: {label}")
-        return memory_block
-
+        webbrowser.open(url)
+        log_action(f"Game launched at URL: {url}")
+        print(f"✅ Game launched at: {url}")
     except Exception as e:
-        print(f"⚠️ Error reading {file_path}: {e}")
-        log_action(f"Error reading {file_path}: {e}")
-        return None
+        log_action(f"⚠️ Failed to launch game: {e}")
+        print(f"⚠️ Failed to launch game: {e}")
 
-def save_to_memory_block(memory_block):
+def perform_game_actions():
     """
-    Placeholder for saving memory block to a database or external system.
+    Automates game actions like clicking buttons and detecting symbols.
     """
-    print(f"📦 Saving memory block: {memory_block}")
-    log_action(f"Saved memory block: {memory_block}")
+    try:
+        time.sleep(10)  # Wait for the game to load
+        print("🎮 Starting game automation...")
 
-# 🧪 Standalone mode for testing/debugging
-def display_chroma_brain():
-    print("🧠 Cortex Mode Activated:")
-    print(r"""
-   ____ _                            _                 
-  / ___| |__   __ _ _ __   __ _  ___| |__   ___  _ __  
- | |   | '_ \ / _` | '_ \ / _` |/ __| '_ \ / _ \| '_ \ 
- | |___| | | | (_| | | | | (_| | (__| | | | (_) | | | |
-  \____|_| |_|\__,_|_| |_|\__,_|\___|_| |_|\___/|_| |_|
+        # Example: Click the spin button
+        spin_button_location = pyautogui.locateOnScreen("assets/symbol_spin_button.png", confidence=0.8)
+        if spin_button_location:
+            pyautogui.click(spin_button_location)
+            log_action("Clicked spin button")
+            print("✅ Spin button clicked")
+        else:
+            log_action("Spin button not found")
+            print("❌ Spin button not found")
 
-    """)
+        # Add more actions here (e.g., adjust bet, detect symbols)
+    except Exception as e:
+        log_action(f"⚠️ Error during game actions: {e}")
+        print(f"⚠️ Error during game actions: {e}")
 
 if __name__ == "__main__":
-    import argparse
+    # Load the game URL from tactic.json
+    GAME_URL = load_game_url()
 
-    parser = argparse.ArgumentParser(description="Chroma Brain Source Code Processor")
-    parser.add_argument("--file", help="Path to the file to process")
-    parser.add_argument("--label", help="Label for the file")
-    args = parser.parse_args()
+    # Launch the game
+    launch_game(GAME_URL)
 
-    if args.file:
-        result = feed_code_file(args.file, label=args.label)
-        print("📦 Memory Block:", result)
-        if result:
-            save_to_memory_block(result)
-    else:
-        display_chroma_brain()
-        print("✨ Chroma Brain Core Loaded (standalone mode)")
+    # Perform game actions
+    perform_game_actions()
