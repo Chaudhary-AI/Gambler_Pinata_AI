@@ -2,8 +2,9 @@
   "name": "greedy-mode",
   "strategy": "increase-after-x50",
   "scatter_stop_threshold": 3,
-  "url": "https://m.x1skf.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=th&or=25rszshb%3Dw1rje%3Dbnl&__hv=2fMEUCIQD44dAi7KDvX0nsXVL%2BTiafnOuabrKnAJY2rp%2FSaBkmWgIgZwaHTb5hsDiBm6VAsUIE2gIke%2FBGXbtQ5QCuVzzWAAU%3D",
+  "url": "https://m.zmcyu9ypy.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=en&or=02uvcvke%3Dboeaw9ara%3Deqo&__hv=2fMEYCIQC7Hy8doTxGYDF4nkoiDdPbVUa63bHimxhWbZr9Jb4%2FYQIhAPsaVxAupnT6g806w8rR%2BJ4PGloNYEKYTOy0B0TpeePW",
   "description": "Configuration for AI Gambler. Adjust scatter threshold and strategy as needed.",
   "bet_increment": 1,
-  "max_bet_limit": 100
+  "max_bet_limit": 100,
+  "TACTIC_PATH": "ruleset/tactic.json"
 }

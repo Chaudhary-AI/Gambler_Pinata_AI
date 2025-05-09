@@ -1,6 +1,4 @@
 # 🔥 AI Gambler - Full Browser Launcher + Scatter Detection
-# File: ai_gambler.py
-
 import time
 import json
 import cv2
@@ -12,73 +10,90 @@ import os
 import logging
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.firefox.service import Service
 from datetime import datetime
 from collections import Counter
 
-# Logging setup
+# ===================== SETUP =====================
+
+# Paths & Constants
+BASE_PATH = Path(__file__).parent
+TACTIC_PATH = BASE_PATH / "ruleset" / "tactic.json"
+SCATTER_TEMPLATE_PATH = BASE_PATH / "assets" / "scatter_template.png"
+LOG_FILE = BASE_PATH / "experience_log.json"
+GECKO_PATH = r"C:\Users\Yenkh\1-ManArmy\OneDrive\professorai\Gambler_Pinata_AI\geckodriver.exe"
+
+DEFAULT_THRESHOLD = 3
+DEFAULT_GAME_URL = "https://example.com"
+STOP_KEY = "space"
+REGION = (500, 300, 1200, 700)  # Default capture region
+
+# Logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
-# Config paths and defaults
-TACTIC_PATH = Path("ruleset") / "tactic.json"
-SCATTER_TEMPLATE_PATH = "assets/scatter_template"  # Correct path to scatter templates
-DEFAULT_THRESHOLD = 3
-REGION = (500, 300, 1200, 700)  # Default game screen region
-STOP_KEY = "space"  # Key to stop spin
-LOG_FILE = "experience_log.json"
+# ===================== LOAD TACTIC.JSON =====================
 
-# Load tactic.json
 try:
-    with open("tactic.json", "r", encoding="utf-8-sig") as f:  # Use utf-8-sig to handle BOM
+    with open(TACTIC_PATH, "r", encoding="utf-8-sig") as f:
         tactic = json.load(f)
-        print(f"Loaded tactic.json: {tactic}")
+        print(f"✅ Loaded tactic.json: {tactic}")
         scatter_threshold = tactic.get("scatter_stop_threshold", DEFAULT_THRESHOLD)
-        game_url = tactic.get("url", "https://m.x1skf.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=th&or=12efmfuo%3Dj1ewr%3Doay&__hv=2fMEQCIEV9J4xK49iMCBPiT0a7pa6Ei5uIKurdFmghBycqBeD3AiAfMvKvFil8l8bmD0uYVF7wXLUDnNnurOSs7lXxeYXqxA%3D%3D")  # Default fallback URL
+        game_url = tactic.get("url", DEFAULT_GAME_URL)
 except Exception as e:
-    print(f"⚠️ Error loading tactic.json: {e}")
+    print(f"⚠️ Failed to load tactic.json: {e}")
     scatter_threshold = DEFAULT_THRESHOLD
-    game_url = "https://m.x1skf.com/1492288/index.html?ot=AF64C68B-E04E-45E5-A4A3-3D7C2A34463D&btt=1&ops=gt61741327361818-gt6ta65three8three&l=th&or=12efmfuo%3Dj1ewr%3Doay&__hv=2fMEQCIEV9J4xK49iMCBPiT0a7pa6Ei5uIKurdFmghBycqBeD3AiAfMvKvFil8l8bmD0uYVF7wXLUDnNnurOSs7lXxeYXqxA%3D%3D"  # Default fallback URL
+    game_url = DEFAULT_GAME_URL
 
-# User input for scatter threshold
+print(f"🎯 Scatter Threshold: {scatter_threshold}")
+print(f"🌍 Game URL: {game_url}")
+
+# ===================== USER INPUT =====================
+
 user_threshold = input(f"Enter scatter threshold (default: {scatter_threshold}): ")
 if user_threshold.isdigit():
     scatter_threshold = int(user_threshold)
-    print(f"✅ Scatter threshold set to: {scatter_threshold}")
+    print(f"✅ Using scatter threshold: {scatter_threshold}")
 else:
     print(f"⚠️ Using default scatter threshold: {scatter_threshold}")
 
-# Launch browser
-print("🌐 Launching Game in Firefox...")
-options = FirefoxOptions()
-options.headless = False
-try:
-    driver = webdriver.Firefox(options=options)
-    driver.get(game_url)
-    driver.maximize_window()
-    print(f"✅ Game loaded: {game_url}")
-except Exception as e:
-    print(f"❌ Failed to launch browser: {e}")
-    exit()
-
-# Wait for game to load
-time.sleep(10)
-
-# Load scatter template
-while not os.path.exists(SCATTER_TEMPLATE_PATH):
-    print(f"❌ Scatter template not found at {SCATTER_TEMPLATE_PATH}")
-    SCATTER_TEMPLATE_PATH = input("Enter correct scatter template path: ")
-scatter_template = cv2.imread(SCATTER_TEMPLATE_PATH, 0)
-w, h = scatter_template.shape[::-1]
-
-# User input for game screen region
 region_input = input("Enter game screen region (x1,y1,x2,y2) or press Enter to use default: ")
 if region_input:
     try:
         REGION = tuple(map(int, region_input.split(',')))
         print(f"✅ Region set to: {REGION}")
     except ValueError:
-        print("⚠️ Invalid input, using default region.")
+        print("⚠️ Invalid region input, using default.")
 
-# Functions
+# ===================== BROWSER LAUNCH =====================
+
+print("🌐 Launching Firefox with Selenium...")
+options = FirefoxOptions()
+options.headless = False
+
+try:
+    service = Service(executable_path=GECKO_PATH)
+    driver = webdriver.Firefox(service=service, options=options)
+    driver.get(game_url)
+    driver.maximize_window()
+    print(f"✅ Game loaded: {game_url}")
+except Exception as e:
+    print(f"❌ Failed to launch Firefox: {e}")
+    exit()
+
+time.sleep(10)  # Let game load
+
+# ===================== LOAD SCATTER TEMPLATE =====================
+
+while not SCATTER_TEMPLATE_PATH.exists():
+    print(f"❌ Scatter template not found at {SCATTER_TEMPLATE_PATH}")
+    new_path = input("Enter correct path to scatter_template.png: ")
+    SCATTER_TEMPLATE_PATH = Path(new_path)
+
+scatter_template = cv2.imread(str(SCATTER_TEMPLATE_PATH), 0)
+w, h = scatter_template.shape[::-1]
+
+# ===================== FUNCTIONS =====================
+
 def grab_game_screen():
     screen = ImageGrab.grab(bbox=REGION)
     return cv2.cvtColor(np.array(screen), cv2.COLOR_BGR2GRAY)
@@ -99,51 +114,53 @@ def log_event(event_type, message):
         "output_snippet": message
     }
     try:
-        # Load existing log
         with open(LOG_FILE, "r") as f:
             logs = json.load(f)
     except FileNotFoundError:
         logs = []
 
-    # Append new event
     logs.append(event)
-
-    # Save updated log
     with open(LOG_FILE, "w") as f:
         json.dump(logs, f, indent=2)
 
-    print(f"Logged event: {event}")
+    print(f"📝 Logged event: {event}")
 
-def generate_summary(log_file):
-    with open(log_file, "r") as f:
+def generate_summary():
+    if not LOG_FILE.exists():
+        print("📭 No log file found.")
+        return
+    with open(LOG_FILE, "r") as f:
         logs = json.load(f)
+    summary = Counter(log["type"] for log in logs)
+    print("📊 Event Summary:", summary)
 
-    event_types = [log["type"] for log in logs]
-    summary = Counter(event_types)
-    print("Event Summary:", summary)
-
-def sort_by_timestamp(log_file):
-    with open(log_file, "r") as f:
+def sort_by_timestamp():
+    if not LOG_FILE.exists():
+        return
+    with open(LOG_FILE, "r") as f:
         logs = json.load(f)
-
     sorted_logs = sorted(logs, key=lambda x: x["timestamp"])
-    with open(log_file, "w") as f:
+    with open(LOG_FILE, "w") as f:
         json.dump(sorted_logs, f, indent=2)
 
-def filter_by_event_type(log_file, event_type):
-    with open(log_file, "r") as f:
+def filter_by_event_type(event_type):
+    if not LOG_FILE.exists():
+        return
+    with open(LOG_FILE, "r") as f:
         logs = json.load(f)
+    filtered = [log for log in logs if log["type"] == event_type]
+    print(f"📂 Filtered ({event_type}):", filtered)
 
-    filtered_logs = [log for log in logs if log["type"] == event_type]
-    print(f"Filtered Logs ({event_type}):", filtered_logs)
+# ===================== LOG ANALYTICS (Optional) =====================
 
-# Example usage
-generate_summary("experience_log.json")
-sort_by_timestamp("experience_log.json")
-filter_by_event_type("experience_log.json", "loss")
+generate_summary()
+sort_by_timestamp()
+filter_by_event_type("scatter")
 
-# Game loop
-logging.info("🎰 AI Active | Scatter Trigger = %d+", scatter_threshold)
+# ===================== MAIN GAME LOOP =====================
+
+print(f"🎰 AI ACTIVE | Watching for {scatter_threshold}+ scatters...")
+
 try:
     while True:
         frame = grab_game_screen()
@@ -151,7 +168,7 @@ try:
         print(f"[👁️] Scatters: {scatters}", end="\r")
 
         if scatters >= scatter_threshold:
-            logging.info("Detected %d scatters", scatters)
+            logging.info(f"Detected {scatters} scatters")
             log_event("scatter", f"Detected {scatters} scatters.")
             stop_spin()
             time.sleep(0.8)
@@ -159,7 +176,7 @@ try:
         time.sleep(0.05)
 
 except KeyboardInterrupt:
-    print("\n👋 AI Exited")
+    print("\n👋 Exiting AI...")
 finally:
     driver.quit()
     print("🛑 Browser closed.")
